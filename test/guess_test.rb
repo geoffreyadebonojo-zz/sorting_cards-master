@@ -3,72 +3,45 @@ require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
 
-require './lib/guess'
 require './lib/card'
-
+require './lib/guess'
 
 class GuessTest < Minitest::Test
+   def test_holds_card # 1 
+    card = Card.new("10", "Hearts")
+    refute_nil card
+   end
 
-  def test_it_holds_whole_card
+   def test_card_attributes # 2, 3
+    card = Card.new("10", "Hearts")
+    assert_equal "10", card.value
+    assert_equal "Hearts", card.suit
+   end 
+
+   def test_guess_holds_card 
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
-    expected = card
-    actual = guess.card
-    assert_equal expected, actual
-  end
+    assert_equal card, guess.card
+   end
 
-  def test_holds_card_value
-    card = Card.new("10", "Hearts")
-    expected = "10"
-    actual = card.value
-    assert_equal expected, actual
-  end
-
-  def test_holds_card_suit
-    card = Card.new("10", "Hearts")
-    expected = "Hearts"
-    actual = card.suit
-    assert_equal expected, actual
-  end
-
-  def test_holds_guess
+   def test_it_holds_guess_response # 7
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
-    expected = "10 of Hearts"
-    actual = guess.response
-    assert_equal expected, actual
-  end
+    assert_equal "10 of Hearts", guess.response
+   end
 
-  def test_correct_is_true_boolean
+   def test_it_can_tell_correct # 8, 14
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
-    expected = TrueClass
-    actual = guess.correct?.class
-    assert_equal expected, actual
-  end
+    assert_equal true,  guess.correct?
+    assert_equal "Correct!", guess.feedback
+   end
 
-  def test_correct_is_false_boolean
-    card = Card.new("10", "Hearts")
-    guess = Guess.new("9 of Hearts", card)
-    expected = FalseClass
-    actual = guess.correct?.class
-    assert_equal expected, actual
-  end
-
-  def test_feedback_correct
-    card = Card.new("10", "Hearts")
-    guess = Guess.new("10 of Hearts", card)
-    expected = p "Correct!"
-    actual = guess.feedback
-    assert_equal expected, actual
-  end
-
-  def test_feedback_incorrect
-    card = Card.new("10", "Hearts")
-    guess = Guess.new("9 of Hearts", card)
-    expected = p "Incorrect."
-    actual = guess.feedback
-    assert_equal expected, actual
-  end
+    def test_it_can_tell_incorrect
+    card = Card.new("10", "Hearts") # 10
+    guess = Guess.new("2 of Diamonds", card) 
+    assert_equal false,  guess.correct?
+    assert_equal "Incorrect.", guess.feedback
+    end
 
 end
