@@ -67,6 +67,7 @@ class DeckTest < Minitest::Test
         card_2 = Card.new("4","Hearts")
         card_3 = Card.new("4","Diamonds")
         card_4 = Card.new("4","Spades")
+        
         assert_equal 0, card_1.worth
         assert_equal 1, card_2.worth
         assert_equal 2, card_3.worth
@@ -104,7 +105,6 @@ class DeckTest < Minitest::Test
         assert_equal 12, card_12.face_value
         assert_equal 13, card_13.face_value
         assert_equal 14, card_14.face_value
-        
     end
 
 end
